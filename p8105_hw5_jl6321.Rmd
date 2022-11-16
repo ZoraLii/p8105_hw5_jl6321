@@ -5,6 +5,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(patchwork)
 
 knitr::opts_chunk$set(
   fig.width = 6,
@@ -156,13 +157,13 @@ mu_til_six %>%
 
 According to the plot, it can be seen that as the true value of mu increases, the power of the test increases as well. 
 
-Make a plot showing the average estimate of μ̂  on the y axis and the true value of μ on the x axis: 
+Make a plot showing the average estimate of μ̂ only in samples for which the null was rejected on the y axis and the true value of μ on the x axis: 
 
 ```{r}
 second_plot_data = 
   mu_til_six %>% 
   mutate(result = case_when(p.value < 0.05 ~ "reject", 
-                            p.value >= .05 ~ "fail to reject")) %>% 
+                            p.value >= 0.05 ~ "fail to reject")) %>% 
   filter(result == "reject") %>% 
   group_by(mu) 
 
@@ -173,10 +174,27 @@ second_plot =
   geom_point(size = 2) + 
   geom_smooth(alpha = 0.2) + 
   labs(x = "True Value of Mu", 
-       y = "Mean Estimate of Mu in Samples With Null Rejected", 
+       y = "Mean Estimate of μˆ in Samples With Null Rejected", 
        title = "Samples With Null Rejected") 
-
-second_plot
 ```
 
+Make a plot showing the average estimate of μ̂ on the y axis and the true value of μ on the x axis: 
+
+```{r}
+first_plot_data = 
+  mu_til_six %>% 
+  mutate(test_results = case_when(p.value < 0.05 ~ "reject", 
+                                  p.value >= .05 ~ "fail to reject")) %>% 
+  group_by(mu)
+
+first_plot = 
+  first_plot_data %>% 
+  summarize(mean_estimate = mean(estimate)) %>% 
+  ggplot(aes(x = mu, y = mean_estimate)) + 
+  geom_point(size = 2.5) + 
+  geom_smooth(alpha = 0.5) + 
+  labs(x = "True Value of Mu", 
+       y = "Mean Estimate of μˆ in Samples", 
+       title = "All Samples")
+```
 
