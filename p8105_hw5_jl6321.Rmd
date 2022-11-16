@@ -31,6 +31,15 @@ homicide = read_csv("data/homicide-data.csv")
 
 The raw data contains `r nrow(homicide)` rows and `r ncol(homicide)` columns, including variables `r colnames(homicide)`. 
 
+```{r}
+homicide = 
+  homicide %>% 
+  mutate(
+      city_state = str_c(city, state, sep = "_"),
+      if_solved = case_when(disposition == "Closed without arrest" ~ "unsolved", 
+                           disposition == "Open/No arrest" ~ "unsolved", 
+                           disposition == "Closed by arrest" ~ "solved"))
+```
 
 
 ## Problem 3
