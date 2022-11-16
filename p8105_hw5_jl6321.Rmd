@@ -71,6 +71,18 @@ bal_estimate =
 bal_estimate
 ```
 
+Run prop.test for each of the cities in the dataset, and extract both the proportion of unsolved homicides and the confidence interval for each: 
+
+```{r}
+all_city = 
+  num_homicide %>% 
+  mutate(
+    prop_test = purrr::map2(.x = unsolved_homicide, .y = total_homicide,  ~prop.test(x = .x, n = .y)), 
+    tidied_test = purrr::map(.x = prop_test, ~broom::tidy(.x))) %>% 
+  select(-prop_test) %>% 
+  unnest(tidied_test) %>% 
+  select(city_state, estimate, conf.low, conf.high) 
+```
 
 
 ## Problem 3
