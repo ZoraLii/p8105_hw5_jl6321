@@ -39,6 +39,14 @@ homicide =
       if_solved = case_when(disposition == "Closed without arrest" ~ "unsolved", 
                            disposition == "Open/No arrest" ~ "unsolved", 
                            disposition == "Closed by arrest" ~ "solved"))
+
+num_homicide = 
+  homicide %>% 
+  group_by(city_state) %>% 
+  summarize(
+    "Total Number of Homicides" = n(), 
+    "Number of Unsolved Homicides" = sum(if_solved == "unsolved")) 
+num_homicide
 ```
 
 
