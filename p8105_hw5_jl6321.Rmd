@@ -23,6 +23,8 @@ scale_fill_discrete = scale_fill_viridis_d
 
 ## Problem 1
 
+
+
 ## Problem 2
 
 ```{r}
@@ -98,3 +100,19 @@ all_city %>%
 
 
 ## Problem 3
+
+Set up the initial function: 
+
+```{r}
+sim_func = function(n = 30, mu, sigma = 5) {
+  sim_func_data = tibble(x = rnorm(n = n, mean = mu, sd = sigma)) 
+  sim_func_data %>% 
+    summarize(mu = mean(x), sigma = sd(x))
+  sim_func_data %>% 
+    t.test() %>% 
+    broom::tidy() %>% 
+    select(estimate, p.value)
+}
+```
+
+
