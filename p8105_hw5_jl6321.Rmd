@@ -57,9 +57,18 @@ Use the prop.test function to estimate the proportion of homicides that are unso
 baltimore = 
   num_homicide %>% 
   filter(city_state == "Baltimore, MD") 
+
 baltimore_prop = 
   prop.test(baltimore$unsolved_homicide, baltimore$total_homicide) %>% 
   broom::tidy()
+
+bal_estimate = 
+  list(
+  "proportion_estimate" = baltimore_prop %>% pull(estimate), 
+  "lower_CI_bound" = baltimore_prop %>% pull(conf.low), 
+  "upper_CI_bound" = baltimore_prop %>% pull(conf.high)) %>% 
+  bind_rows()
+bal_estimate
 ```
 
 
