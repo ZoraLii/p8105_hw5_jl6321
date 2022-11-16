@@ -8,14 +8,15 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+
 ## Problem 1
 
+## Problem 2
 
-```{r Problem 1}
+```{r}
 homicide = read_csv("data/homicide-data.csv")
 ```
 
-
-## Problem 2
+The raw data contains `r nrow(homicide)` rows and `r ncol(homicide)` columns, including variables `r colnames(homicide)`. 
 
 ## Problem 3
