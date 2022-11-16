@@ -84,5 +84,17 @@ all_city =
   select(city_state, estimate, conf.low, conf.high) 
 ```
 
+Create a plot that shows the estimates and CIs for each city: 
+
+```{r}
+all_city %>% 
+  mutate(city_state = fct_reorder(city_state, estimate)) %>% 
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point() + 
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high)) + 
+  labs(x = "City, State", y = "Estimated Proportion with 95% CI",title = "Unsolved Homicides") + 
+  scale_x_discrete(guide = guide_axis(angle = 90)) 
+```
+
 
 ## Problem 3
