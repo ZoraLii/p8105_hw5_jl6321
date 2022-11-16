@@ -198,3 +198,11 @@ first_plot =
        title = "All Samples")
 ```
 
+Combine 2 plots: 
+
+```{r}
+first_plot + second_plot
+```
+
+Based on the plot, when the true value of mu is small, the average estimate of μˆ deviates from the true value of mu, implying publication bias. . However, as the effect size increases, the average estimate of μˆ gets closer to the true value of mu since power increases. 
+
