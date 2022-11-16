@@ -115,4 +115,13 @@ sim_func = function(n = 30, mu, sigma = 5) {
 }
 ```
 
+Set μ = 0 and generate 5000 datasets from the model with normal distribution: 
+
+```{r}
+mu_zero = 
+  rerun(5000, sim_func(30, 0, 5)) %>% 
+  bind_rows() %>% 
+  select(estimate, p.value) 
+```
+
 
